@@ -1,30 +1,27 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import User from 'App/Models/User'
-import Encryption from '@ioc:Adonis/Core/Encryption'
+import Permission from 'App/Models/Permission'
 
-export default class UsersController {
+export default class PermissionsController {
   /**
    * Lista todos los usuarios
    */
   public async index(ctx: HttpContextContract) {
-    let users: User[] = await User.query().preload('role')
-    return users
+    let permissions: Permission[] = await Permission.query().preload('roles')
+    return permissions
   }
   /**
    * Almacena la información de un usuario
    */
   public async store({ request }: HttpContextContract) {
     const body = request.body()
-    body.password = Encryption.encrypt(body.password)
-    const newUser: User = await User.create(body)
-    return newUser
+    const newPermission: Permission = await Permission.create(body)
+    return newPermission
   }
   /**
    * Muestra la información de un solo usuario
    */
   public async show({ params }: HttpContextContract) {
-    let theUser = await User.query().where('id', params.id)
-    return theUser
+    return Permission.findOrFail(params.id)
   }
   /**
    * Actualiza la información de un usuario basado
@@ -32,18 +29,16 @@ export default class UsersController {
    */
   public async update({ params, request }: HttpContextContract) {
     const body = request.body()
-    const theUser: User = await User.findOrFail(params.id)
-    theUser.name = body.name
-    theUser.email = body.email
-    theUser.password = Encryption.encrypt(body.password)
-    theUser.idRol = body.idRol
-    return theUser.save()
+    const thePermission: Permission = await Permission.findOrFail(params.id)
+    thePermission.url = body.url
+    thePermission.method = body.method
+    return thePermission.save()
   }
   /**
    * Elimina a un usuario basado en el identificador
    */
   public async destroy({ params }: HttpContextContract) {
-    const theUser: User = await User.findOrFail(params.id)
-    return theUser.delete()
+    const thePermission: Permission = await Permission.findOrFail(params.id)
+    return thePermission.delete()
   }
 }
