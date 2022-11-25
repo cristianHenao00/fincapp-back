@@ -30,6 +30,18 @@ Route.get('/users/:id', 'UsersController.show')
 Route.put('/users/:id', 'UsersController.update')
 Route.delete('/users/:id', 'UsersController.destroy')
 
+Route.get('/farms', 'FarmsController.index')
+Route.post('/farms', 'FarmsController.store')
+Route.get('/farms/:id', 'FarmsController.show')
+Route.put('/farms/:id', 'FarmsController.update')
+Route.delete('/farms/:id', 'FarmsController.destroy')
+
+Route.get('/orders', 'OrdersController.index')
+Route.post('/orders', 'OrdersController.store')
+Route.get('/orders/:id', 'OrdersController.show')
+Route.put('/orders/:id', 'OrdersController.update')
+Route.delete('/orders/:id', 'OrdersController.destroy')
+
 Route.get('/products', 'ProductsController.index')
 Route.post('/products', 'ProductsController.store')
 Route.get('/products/:id', 'ProductsController.show')
@@ -53,3 +65,4 @@ Route.post('/ordersStates', 'OrdersStatesController.store')
 Route.get('/ordersStates/:id', 'OrdersStatesController.show')
 Route.put('/ordersStates/:id', 'OrdersStatesController.update')
 Route.delete('/ordersStates/:id', 'OrdersStatesController.destroy')
+
