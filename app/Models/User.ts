@@ -1,6 +1,8 @@
 import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, BelongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, belongsTo, BelongsTo, column, HasMany, hasMany, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import Rol from './Role'
+import Farm from './Farm'
+import Order from './Order'
 
 export default class User extends BaseModel {
   public static table = 'users'
@@ -30,4 +32,17 @@ export default class User extends BaseModel {
     foreignKey: 'idRol',
   })
   public role: BelongsTo<typeof Rol>
+
+  @hasOne(() => Farm,{
+    foreignKey: 'idUser'
+  })
+  public farm: HasOne<typeof Farm>
+
+
+  @hasMany(() => Order,{
+    foreignKey: 'idUser'
+  })
+  public orders: HasMany<typeof Order>
+
+  
 }
