@@ -30,8 +30,8 @@ export default class PermissionsRolesController {
   public async update({ params, request }: HttpContextContract) {
     const body = request.body()
     const thePermissionRole: PermissionRol = await PermissionRol.findOrFail(params.id)
-    thePermissionRole.idRol = body.idRol
-    thePermissionRole.idPermission = body.idPermission
+    thePermissionRole.id_rol = body.id_rol
+    thePermissionRole.id_permission = body.id_permission
     return thePermissionRole.save()
   }
   /**

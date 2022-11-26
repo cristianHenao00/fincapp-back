@@ -3,13 +3,13 @@ import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
 
 export default class ApiToken extends BaseModel {
-  public static table = 'apiTokens'
+  public static table = 'api_tokens'
 
   @column({ isPrimary: true })
   public id: number
 
   @column()
-  public idUser: number
+  public id_user: number
 
   @column()
   public name: string
@@ -27,7 +27,7 @@ export default class ApiToken extends BaseModel {
   public updatedAt: DateTime
 
   @belongsTo(() => User, {
-    localKey: 'idUser',
+    localKey: 'id_user',
   })
   public rol: BelongsTo<typeof User>
 }

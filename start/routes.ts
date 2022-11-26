@@ -31,11 +31,6 @@ Route.post('/users', 'UsersController.store')
 Route.get('/users/:id', 'UsersController.show')
 Route.put('/users/:id', 'UsersController.update')
 Route.delete('/users/:id', 'UsersController.destroy')
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> 784c24a6638dd9fc1c74cad4302e06c52a65f9e6
 /**
  * EndPoints de roles
  */
@@ -70,11 +65,6 @@ Route.post('/login', 'SecuritysController.login')
 Route.post('/forgot', 'SecuritysController.forgotPassword')
 Route.post('/reset', 'SecuritysController.resetPassword')
 Route.post('/logout', 'SecuritysController.logout')
-<<<<<<< HEAD
-=======
-=======
-
->>>>>>> 784c24a6638dd9fc1c74cad4302e06c52a65f9e6
 
 Route.get('/farms', 'FarmsController.index')
 Route.post('/farms', 'FarmsController.store')
@@ -111,8 +101,3 @@ Route.post('/ordersStates', 'OrdersStatesController.store')
 Route.get('/ordersStates/:id', 'OrdersStatesController.show')
 Route.put('/ordersStates/:id', 'OrdersStatesController.update')
 Route.delete('/ordersStates/:id', 'OrdersStatesController.destroy')
-
-<<<<<<< HEAD
->>>>>>> main
-=======
->>>>>>> 784c24a6638dd9fc1c74cad4302e06c52a65f9e6

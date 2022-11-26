@@ -19,14 +19,14 @@ export default class Rol extends BaseModel {
   public updatedAt: DateTime
 
   @hasMany(() => User, {
-    foreignKey: 'idRol',
+    foreignKey: 'id_rol',
   })
   public users: HasMany<typeof User>
 
   @manyToMany(() => Permission, {
-    pivotTable: 'permissionsRoles',
-    pivotForeignKey: 'idRol',
-    pivotRelatedForeignKey: 'idPermission',
+    pivotTable: 'permissions_roles',
+    pivotForeignKey: 'id_rol',
+    pivotRelatedForeignKey: 'id_permission',
   })
   public permissions: ManyToMany<typeof Permission>
 }

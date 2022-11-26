@@ -1,25 +1,32 @@
 import { DateTime } from 'luxon'
-import { BaseModel, BelongsTo, belongsTo, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
-import Product from './Product';
-import Order from './Order';
+import {
+  BaseModel,
+  BelongsTo,
+  belongsTo,
+  column,
+  ManyToMany,
+  manyToMany,
+} from '@ioc:Adonis/Lucid/Orm'
+import Product from './Product'
+import Order from './Order'
 
 export default class StockProduct extends BaseModel {
-  public static table = 'stockProduct'
+  public static table = 'stock_product'
 
   @column({ isPrimary: true })
   public id: number
 
   @column()
-  public value: number;
+  public value: number
 
   @column()
-  public amount: number;
+  public amount: number
 
   @column()
-  public published: Date;
+  public published: Date
 
   @column()
-  public visibility: boolean;
+  public visibility: boolean
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -28,18 +35,17 @@ export default class StockProduct extends BaseModel {
   public updatedAt: DateTime
 
   @column()
-  public idProduct: number
+  public id_product: number
 
   @belongsTo(() => Product, {
-    foreignKey: 'idProduct',
+    foreignKey: 'id_product',
   })
   public product: BelongsTo<typeof Product>
 
   @manyToMany(() => Order, {
-    pivotTable: 'itemsProduct',
-    pivotForeignKey: 'idStock',
-    pivotRelatedForeignKey:'idOrder'
-    })
-    public orders: ManyToMany<typeof Order>
-
+    pivotTable: 'items_product',
+    pivotForeignKey: 'id_stock',
+    pivotRelatedForeignKey: 'id_order',
+  })
+  public orders: ManyToMany<typeof Order>
 }

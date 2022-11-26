@@ -17,25 +17,25 @@ export default class Order extends BaseModel {
   public id: number
 
   @column()
-  public idUser: number
+  public id_user: number
 
   @column()
-  public idFarm: number
+  public id_farm: number
 
   @column()
-  public dateOrder: string
+  public date_order: string
 
   @column()
   public state: boolean
 
   @column()
-  public serviceCost: number
+  public service_cost: number
 
   @column()
-  public shippingCost: number
+  public shipping_cost: number
 
   @column()
-  public serviceFee: number
+  public service_fee: number
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -44,18 +44,19 @@ export default class Order extends BaseModel {
   public updatedAt: DateTime
 
   @manyToMany(() => StockProduct, {
-    pivotTable: 'itemsProduct',
-    pivotForeignKey: 'idOrder',
-    pivotRelatedForeignKey: 'idStock',
+    pivotTable: 'items_product',
+    pivotForeignKey: 'id_order',
+    pivotRelatedForeignKey: 'id_stock',
   })
   public stockProducts: ManyToMany<typeof StockProduct>
+
   @belongsTo(() => User, {
-    foreignKey: 'idUser',
+    foreignKey: 'id_user',
   })
   public user: BelongsTo<typeof User>
 
   @belongsTo(() => Farm, {
-    foreignKey: 'idFarm',
+    foreignKey: 'id_farm',
   })
   public farm: BelongsTo<typeof Farm>
 }

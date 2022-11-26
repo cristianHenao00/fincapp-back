@@ -3,6 +3,7 @@ import { BaseModel, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import Product from './Product'
 
 export default class Category extends BaseModel {
+  public static table = 'categories'
   @column({ isPrimary: true })
   public id: number
 
@@ -16,7 +17,7 @@ export default class Category extends BaseModel {
   public updatedAt: DateTime
 
   @hasMany(() => Product, {
-    foreignKey: 'idCategory',
+    foreignKey: 'id_category',
   })
   public products: HasMany<typeof Product>
 }

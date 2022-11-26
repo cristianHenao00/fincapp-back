@@ -9,16 +9,16 @@ export default class Farm extends BaseModel {
   public id: number
 
   @column()
-  public idUser: number
+  public id_user: number
 
   @column()
-  public name: string
+  public nombre: string
 
   @column()
   public address: string
 
   @column()
-  public numberLicense: string
+  public number_license: string
 
   @column()
   public image: string
@@ -30,12 +30,12 @@ export default class Farm extends BaseModel {
   public updatedAt: DateTime
 
   @hasMany(() => Product, {
-    foreignKey: 'idFarm',
+    foreignKey: 'id_farm',
   })
   public products: HasMany<typeof Product>
 
   @hasMany(() => Order, {
-    foreignKey: 'idFarm',
+    foreignKey: 'id_farm',
   })
   public orders: HasMany<typeof Order>
 }

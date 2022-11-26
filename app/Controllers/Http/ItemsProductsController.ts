@@ -2,12 +2,10 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import ItemsProduct from 'App/Models/ItemsProduct'
 
 export default class ItemsProductsController {
-
   //Lista todos los itemsProducts
 
   public async index(ctx: HttpContextContract) {
-    let itemsProducts: ItemsProduct[] = await
-        ItemsProduct.query()
+    let itemsProducts: ItemsProduct[] = await ItemsProduct.query()
     return itemsProducts
   }
 
@@ -31,8 +29,8 @@ export default class ItemsProductsController {
   public async update({ params, request }: HttpContextContract) {
     const body = request.body()
     const theItemsProduct = await ItemsProduct.findOrFail(params.id)
-    theItemsProduct.idStock = body.idStock
-    theItemsProduct.idOrder = body.idOrder
+    theItemsProduct.id_stock = body.id_stock
+    theItemsProduct.id_order = body.id_order
     theItemsProduct.amount = body.amount
     return theItemsProduct.save()
   }
@@ -43,6 +41,4 @@ export default class ItemsProductsController {
     const theItemsProduct = await ItemsProduct.findOrFail(params.id)
     return theItemsProduct.delete()
   }
-
-
 }

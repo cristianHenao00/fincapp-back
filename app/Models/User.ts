@@ -38,25 +38,25 @@ export default class User extends BaseModel {
   public updatedAt: DateTime
 
   @column()
-  public idRol: number
+  public id_rol: number
 
   @belongsTo(() => Rol, {
-    foreignKey: 'idRol',
+    foreignKey: 'id_rol',
   })
   public role: BelongsTo<typeof Rol>
 
   @hasMany(() => ApiToken, {
-    foreignKey: 'idUser',
+    foreignKey: 'id_user',
   })
   public users: HasMany<typeof ApiToken>
 
   @hasOne(() => Farm, {
-    foreignKey: 'idUser',
+    foreignKey: 'id_user',
   })
   public farm: HasOne<typeof Farm>
 
   @hasMany(() => Order, {
-    foreignKey: 'idUser',
+    foreignKey: 'id_user',
   })
   public orders: HasMany<typeof Order>
 

@@ -2,15 +2,15 @@ import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
 export default class OrderState extends BaseModel {
+  public static table = 'order_state'
   @column({ isPrimary: true })
   public id: number
 
   @column()
-  public idOrder : number
+  public id_order: number
 
   @column()
-  public idState : number
-
+  public id_state: number
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

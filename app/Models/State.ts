@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, HasMany, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
 import Order from './Order'
 
 export default class State extends BaseModel {
@@ -16,11 +16,9 @@ export default class State extends BaseModel {
   public updatedAt: DateTime
 
   @manyToMany(() => Order, {
-    pivotTable: 'orderStates' ,
-    pivotForeignKey: 'idState' , 
-    pivotRelatedForeignKey: 'idOrders' , 
-    
-    })
-    public orders: ManyToMany<typeof Order>
-
+    pivotTable: 'order_states',
+    pivotForeignKey: 'id_state',
+    pivotRelatedForeignKey: 'id_orders',
+  })
+  public orders: ManyToMany<typeof Order>
 }
