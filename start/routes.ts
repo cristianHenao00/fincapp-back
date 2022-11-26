@@ -31,6 +31,50 @@ Route.post('/users', 'UsersController.store')
 Route.get('/users/:id', 'UsersController.show')
 Route.put('/users/:id', 'UsersController.update')
 Route.delete('/users/:id', 'UsersController.destroy')
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> 784c24a6638dd9fc1c74cad4302e06c52a65f9e6
+/**
+ * EndPoints de roles
+ */
+Route.get('/roles', 'RolesController.index')
+Route.post('/roles', 'RolesController.store')
+Route.get('/roles/:id', 'RolesController.show')
+Route.put('/roles/:id', 'RolesController.update')
+Route.delete('/roles/:id', 'RolesController.destroy')
+
+/**
+ * EndPoints de permisssion
+ */
+Route.get('/permissions', 'PermissionsController.index')
+Route.post('/permissions', 'PermissionsController.store')
+Route.get('/permissions/:id', 'PermissionsController.show')
+Route.put('/permissions/:id', 'PermissionsController.update')
+Route.delete('/permissions/:id', 'PermissionsController.destroy')
+
+/**
+ * EndPoints de permisssionRoles
+ */
+Route.get('/permissionsRoles', 'PermissionsRolesController.index')
+Route.post('/permissionsRoles', 'PermissionsRolesController.store')
+Route.get('/permissionsRoles/:id', 'PermissionsRolesController.show')
+Route.put('/permissionsRoles/:id', 'PermissionsRolesController.update')
+Route.delete('/permissionsRoles/:id', 'PermissionsRolesController.destroy')
+
+/**
+ * EndPoints de seguridad
+ */
+Route.post('/login', 'SecuritysController.login')
+Route.post('/forgot', 'SecuritysController.forgotPassword')
+Route.post('/reset', 'SecuritysController.resetPassword')
+Route.post('/logout', 'SecuritysController.logout')
+<<<<<<< HEAD
+=======
+=======
+
+>>>>>>> 784c24a6638dd9fc1c74cad4302e06c52a65f9e6
 
 Route.get('/farms', 'FarmsController.index')
 Route.post('/farms', 'FarmsController.store')
@@ -68,3 +112,7 @@ Route.get('/ordersStates/:id', 'OrdersStatesController.show')
 Route.put('/ordersStates/:id', 'OrdersStatesController.update')
 Route.delete('/ordersStates/:id', 'OrdersStatesController.destroy')
 
+<<<<<<< HEAD
+>>>>>>> main
+=======
+>>>>>>> 784c24a6638dd9fc1c74cad4302e06c52a65f9e6

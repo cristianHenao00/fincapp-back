@@ -7,11 +7,16 @@ export default class UsersController {
    * Lista todos los usuarios
    */
   public async index(ctx: HttpContextContract) {
+<<<<<<< HEAD
+    let users: User[] = await User.query().preload('role')
+    return users
+=======
 
     let users:User[]=await
       User.query().preload('farm').preload('orders').preload('role')
         return users;
 
+>>>>>>> main
   }
   /**
    * Almacena la información de un usuario
@@ -26,11 +31,16 @@ export default class UsersController {
    * Muestra la información de un solo usuario
    */
   public async show({ params }: HttpContextContract) {
+<<<<<<< HEAD
+    let theUser = await User.query().where('id', params.id)
+    return theUser
+=======
     let the_user=await
         User.query().where('id',params.id).preload('farm').preload('orders').preload('role')
 
         return the_user
 
+>>>>>>> main
   }
   /**
    * Actualiza la información de un usuario basado
@@ -42,10 +52,14 @@ export default class UsersController {
     theUser.name = body.name
     theUser.email = body.email
     theUser.password = Encryption.encrypt(body.password)
+<<<<<<< HEAD
+    theUser.idRol = body.idRol
+=======
     theUser.farm = body.farm
     theUser.orders = body.orders
     theUser.idRol = body.idRol
 
+>>>>>>> main
     return theUser.save()
   }
   /**

@@ -1,8 +1,20 @@
 import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, BelongsTo, column, HasMany, hasMany, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import {
+  BaseModel,
+  beforeSave,
+  belongsTo,
+  BelongsTo,
+  column,
+  HasMany,
+  hasMany,
+  HasOne,
+  hasOne,
+} from '@ioc:Adonis/Lucid/Orm'
 import Rol from './Role'
-import Farm from './Farm'
+import ApiToken from './ApiToken'
+import Hash from '@ioc:Adonis/Core/Hash'
 import Order from './Order'
+import Farm from './Farm'
 
 export default class User extends BaseModel {
   public static table = 'users'
@@ -33,16 +45,25 @@ export default class User extends BaseModel {
   })
   public role: BelongsTo<typeof Rol>
 
-  @hasOne(() => Farm,{
-    foreignKey: 'idUser'
+  @hasMany(() => ApiToken, {
+    foreignKey: 'idUser',
+  })
+  public users: HasMany<typeof ApiToken>
+
+  @hasOne(() => Farm, {
+    foreignKey: 'idUser',
   })
   public farm: HasOne<typeof Farm>
 
-
-  @hasMany(() => Order,{
-    foreignKey: 'idUser'
+  @hasMany(() => Order, {
+    foreignKey: 'idUser',
   })
   public orders: HasMany<typeof Order>
 
-  
+  @beforeSave()
+  public static async hashPassword(theUser: User) {
+    if (theUser.$dirty.password) {
+      theUser.password = await Hash.make(theUser.password)
+    }
+  }
 }
