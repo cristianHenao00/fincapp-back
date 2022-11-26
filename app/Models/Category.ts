@@ -15,9 +15,8 @@ export default class Category extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @hasMany(() => Product,{
-  foreignKey: 'idCategory'  
-})
-    public products: HasMany <typeof Product>
-
+  @hasMany(() => Product, {
+    foreignKey: 'idCategory',
+  })
+  public products: HasMany<typeof Product>
 }

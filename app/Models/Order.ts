@@ -1,6 +1,13 @@
 import { DateTime } from 'luxon'
-import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
-
+import StockProduct from './StockProduct'
+import {
+  BaseModel,
+  BelongsTo,
+  belongsTo,
+  column,
+  ManyToMany,
+  manyToMany,
+} from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
 import Farm from './Farm'
 
@@ -10,25 +17,25 @@ export default class Order extends BaseModel {
   public id: number
 
   @column()
-  public idUser:number
-  
-  @column()
-  public idFarm:number
+  public idUser: number
 
   @column()
-  public dateOrder:string;
+  public idFarm: number
 
   @column()
-  public state:boolean;
+  public dateOrder: string
 
   @column()
-  public serviceCost:number;
+  public state: boolean
 
   @column()
-  public shippingCost:number;
+  public serviceCost: number
 
   @column()
-  public serviceFee:number;
+  public shippingCost: number
+
+  @column()
+  public serviceFee: number
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -36,15 +43,19 @@ export default class Order extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @belongsTo(() => User,{
+  @manyToMany(() => StockProduct, {
+    pivotTable: 'itemsProduct',
+    pivotForeignKey: 'idOrder',
+    pivotRelatedForeignKey: 'idStock',
+  })
+  public stockProducts: ManyToMany<typeof StockProduct>
+  @belongsTo(() => User, {
     foreignKey: 'idUser',
   })
   public user: BelongsTo<typeof User>
 
-  @belongsTo(() => Farm,{
+  @belongsTo(() => Farm, {
     foreignKey: 'idFarm',
   })
   public farm: BelongsTo<typeof Farm>
-
-
 }

@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column,hasMany,HasMany ,hasOne,HasOne} from '@ioc:Adonis/Lucid/Orm'
-
+import { BaseModel, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
+import Product from './Product'
 import Order from './Order'
 
 export default class Farm extends BaseModel {
@@ -9,19 +9,19 @@ export default class Farm extends BaseModel {
   public id: number
 
   @column()
-  public idUser:number
+  public idUser: number
 
   @column()
-  public name:string;
+  public name: string
 
   @column()
-  public address:string;
+  public address: string
 
   @column()
-  public numberLicense:string;
+  public numberLicense: string
 
   @column()
-  public image:string;
+  public image: string
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -29,11 +29,13 @@ export default class Farm extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @hasMany(() => Order,{
-    foreignKey: 'idFarm'
+  @hasMany(() => Product, {
+    foreignKey: 'idFarm',
+  })
+  public products: HasMany<typeof Product>
+
+  @hasMany(() => Order, {
+    foreignKey: 'idFarm',
   })
   public orders: HasMany<typeof Order>
-
-
- 
 }
