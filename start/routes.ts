@@ -69,6 +69,9 @@ Route.post('/forgot', 'SecuritysController.forgotPassword')
 Route.post('/reset', 'SecuritysController.resetPassword')
 Route.post('/logout', 'SecuritysController.logout')
 
+Route.get('/listProducts/:id', 'FarmsController.listProducts')
+Route.get('/searchFarms/:nombre', 'FarmsController.searchFarm')
+Route.get('/listFarms', 'FarmsController.listFarms')
 Route.get('/farms', 'FarmsController.index')
 Route.post('/farms', 'FarmsController.store')
 Route.get('/farms/:id', 'FarmsController.show')
@@ -80,6 +83,7 @@ Route.post('/orders', 'OrdersController.store')
 Route.get('/orders/:id', 'OrdersController.show')
 Route.put('/orders/:id', 'OrdersController.update')
 Route.delete('/orders/:id', 'OrdersController.destroy')
+
 
 Route.get('/products', 'ProductsController.index')
 Route.post('/products', 'ProductsController.store')
@@ -105,6 +109,7 @@ Route.get('/ordersStates/:id', 'OrdersStatesController.show')
 Route.put('/ordersStates/:id', 'OrdersStatesController.update')
 Route.delete('/ordersStates/:id', 'OrdersStatesController.destroy')
 
+<<<<<<< HEAD
 /**
  *  Endpoints Modules
  */
@@ -126,4 +131,12 @@ Route.post('/menus', 'MenusController.store')
 Route.get('/menus/:id', 'MenusController.show')
 Route.put('/menus/:id', 'MenusController.update')
 Route.delete('/menus/:id', 'MenusController.destroy')
+=======
+
+Route.get('/stockProducts', 'StockProductsController.index')
+Route.post('/stockProducts', 'StockProductsController.store')
+Route.get('/stockProducts/:id', 'StockProductsController.show')
+Route.put('/stockProducts/:id', 'StockProductsController.update')
+Route.delete('/stockProducts/:id', 'StockProductsController.destroy')
+>>>>>>> 06fee4cd4520301b701e341c8d16c390e634b651
 

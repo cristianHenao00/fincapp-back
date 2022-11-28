@@ -37,6 +37,15 @@ export default class OrdersController {
   public async update({ params, request }: HttpContextContract) {
     const body = request.body()
     const theOrder = await Order.findOrFail(params.id)
+<<<<<<< HEAD
+    theOrder.dateOrder = body.dateOrder
+    theOrder.state = body.state
+    theOrder.serviceCost = body.serviceCost
+    theOrder.shippingCost = body.shippingCost
+    theOrder.serviceFee = body.serviceFee
+    theOrder.idFarm = body.idFarm
+    theOrder.idUser = body.idUser
+=======
     theOrder.date_order = body.date_order
     theOrder.state = body.state
     theOrder.service_cost = body.service_cost
@@ -44,6 +53,7 @@ export default class OrdersController {
     theOrder.service_fee = body.service_fee
     theOrder.id_farm = body.id_farm
     theOrder.id_user = body.id_user
+>>>>>>> main
 
     return theOrder.save()
   }
