@@ -62,7 +62,7 @@ export default class FarmsController {
   public async update({ params, request }: HttpContextContract) {
     const body = request.body()
     const theFarm = await Farm.findOrFail(params.id)
-    theFarm.nombre = body.nombre
+    theFarm.nombre = body.name
     theFarm.address = body.address
     theFarm.number_license = body.number_license
     theFarm.image = body.image

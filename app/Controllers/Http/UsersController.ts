@@ -1,6 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import User from 'App/Models/User'
-import Encryption from '@ioc:Adonis/Core/Encryption'
+import { schema, rules } from '@ioc:Adonis/Core/Validator'
 
 export default class UsersController {
   /**
@@ -14,10 +14,27 @@ export default class UsersController {
    * Almacena la información de un usuario
    */
   public async store({ request }: HttpContextContract) {
-    const body = request.body()
-    body.password = Encryption.encrypt(body.password)
-    const newUser: User = await User.create(body)
-    return newUser
+    const post = await request.validate({
+      schema: schema.create({
+        name: schema.string([rules.trim(), rules.required()]),
+        email: schema.string([rules.email(), rules.required()]),
+        password: schema.string([rules.required()]),
+        id_rol: schema.number([rules.required()]),
+      }),
+    })
+    if (post) {
+      const theUser = await User.findBy('email', post.email)
+      if (!theUser) {
+        const newUser: User = await User.create(post)
+        User.hashPassword(newUser)
+        return newUser
+      } else {
+        return {
+          status: 'error',
+          message: 'Usuario ya creado',
+        }
+      }
+    }
   }
   /**
    * Muestra la información de un solo usuario
@@ -28,6 +45,13 @@ export default class UsersController {
       .preload('farm')
       .preload('orders')
       .preload('role')
+      .first()
+    if (!theUser) {
+      return {
+        status: 'error',
+        message: 'Usuario no encontrado',
+      }
+    }
     return theUser
   }
   /**
@@ -35,16 +59,27 @@ export default class UsersController {
    * en el identificador y nuevos parámetros
    */
   public async update({ params, request }: HttpContextContract) {
-    const body = request.body()
-    const theUser: User = await User.findOrFail(params.id)
-    theUser.name = body.name
-    theUser.email = body.email
-    theUser.password = Encryption.encrypt(body.password)
-    theUser.farm = body.farm
-    theUser.orders = body.orders
-    theUser.id_rol = body.id_rol
-
-    return theUser.save()
+    const post = await request.validate({
+      schema: schema.create({
+        name: schema.string([rules.trim(), rules.required()]),
+        email: schema.string([rules.email(), rules.required()]),
+        id_rol: schema.number([rules.required()]),
+      }),
+    })
+    if (post) {
+      const theUser = await User.find(params.id)
+      if (theUser) {
+        theUser.name = post.name
+        theUser.email = post.email
+        theUser.id_rol = post.id_rol
+        return theUser.save()
+      } else {
+        return {
+          status: 'error',
+          message: 'Usuario no encontrado',
+        }
+      }
+    }
   }
   /**
    * Elimina a un usuario basado en el identificador

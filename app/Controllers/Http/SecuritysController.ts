@@ -3,26 +3,37 @@ import User from 'App/Models/User'
 import Hash from '@ioc:Adonis/Core/Hash'
 import PlantillaSeguridad from 'App/Services/EmailsTemplates/TemplateSecurity'
 import EmailService from 'App/Services/EmailService'
+import { schema, rules } from '@ioc:Adonis/Core/Validator'
 
 export default class SecuritysController {
   public async login({ auth, request, response }) {
-    const email = request.input('email')
-    const password = request.input('password')
-    const theUser = await User.query().where('email', email).firstOrFail()
-    if (await Hash.verify(theUser.password, password)) {
-      //Generacion de token
-      const token = await auth.use('api').generate(theUser, {
-        expiresIn: '60 mins',
-      })
-      //Obtiene los datos correspondientes a la relacion
-      await theUser.load('role')
-      theUser.password = ''
-      return {
-        token: token,
-        User: theUser,
+    const post = await request.validate({
+      schema: schema.create({
+        email: schema.string([rules.email(), rules.required()]),
+        password: schema.string([rules.required()]),
+      }),
+    })
+    const theUser = await User.findBy('email', post.email)
+    if (theUser) {
+      if (await Hash.verify(theUser.password, post.password)) {
+        //Generacion de token
+        const token = await auth.use('api').generate(theUser, {
+          expiresIn: '60 mins',
+        })
+        //Obtiene los datos correspondientes a la relacion
+        await theUser.load('role')
+        await theUser.load('farm')
+        await theUser.load('orders')
+        theUser.password = ''
+        return {
+          token: token,
+          User: theUser,
+        }
+      } else {
+        return response.unauthorized('Credenciales inválidas')
       }
     } else {
-      return response.unauthorized('Credenciales inválidas')
+      return response.unauthorized('Correo no registrado')
     }
   }
 
@@ -32,11 +43,14 @@ export default class SecuritysController {
   }
 
   public async forgotPassword({ auth, request }) {
-    let response: Object = {}
-    const email = request.input('email')
-    const theUser = await User.query().where('email', email).firstOrFail()
+    const post = await request.validate({
+      schema: schema.create({
+        email: schema.string([rules.email(), rules.required()]),
+      }),
+    })
+    const theUser = await User.findBy('email', post.email)
     if (!theUser) {
-      response = {
+      return {
         status: 'error',
         message: 'El correo no está registrado en la plataforma.',
       }
@@ -47,41 +61,35 @@ export default class SecuritysController {
       let templateEmail: PlantillaSeguridad = new PlantillaSeguridad()
       let html = templateEmail.forgotPassword(token.token)
       let serviceEmail: EmailService = new EmailService()
-      serviceEmail.sendEmail(email, 'Solicitud restablecimiento de contraseña', html)
-      response = {
+      serviceEmail.sendEmail(post.email, 'Solicitud restablecimiento de contraseña', html)
+      return {
         status: 'success',
         message: 'Revisar el correo.',
       }
     }
-    return response
   }
 
   public async resetPassword({ auth, request }) {
-    let response: Object = {}
-    try {
-      await auth.use('api').authenticate()
-      auth.use('api').isAuthenticated
-    } catch (error) {
-      return {
-        status: 'error',
-        message: 'Token corrupto',
-      }
-    }
     const theUser = await User.findBy('email', auth.user!.email)
     if (!theUser) {
-      response = {
+      return {
         status: 'error',
         message: 'Este usuario no existe',
       }
     } else {
-      theUser.password = request.input('password')
+      const post = await request.validate({
+        schema: schema.create({
+          password: schema.string([rules.required()]),
+        }),
+      })
+      theUser.password = post.password
+      User.hashPassword(theUser)
       await theUser.save()
       await auth.use('api').revoke()
-      response = {
+      return {
         status: 'success',
         message: 'La contraseña se ha restaurado correctamente',
       }
     }
-    return response
   }
 }
