@@ -2,6 +2,7 @@ import { DateTime } from 'luxon'
 import { BaseModel, column, HasMany, hasMany, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
 import Permission from './Permission'
+import Module from './Module'
 
 export default class Rol extends BaseModel {
   public static table = 'roles'
@@ -29,4 +30,11 @@ export default class Rol extends BaseModel {
     pivotRelatedForeignKey: 'id_permission',
   })
   public permissions: ManyToMany<typeof Permission>
+
+  @manyToMany(() => Module, {
+    pivotTable: 'role_modules',
+    pivotForeignKey: 'id',
+    pivotRelatedForeignKey: 'id_rol',
+  })
+  public modules: ManyToMany<typeof Module>
 }

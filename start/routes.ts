@@ -36,6 +36,9 @@ Route.delete('/users/:id', 'UsersController.destroy')
  */
 Route.get('/roles', 'RolesController.index')
 Route.post('/roles', 'RolesController.store')
+Route.post('/roles/assign', 'RolesController.assignModule')
+Route.get('/roles/modules/menus/:id', 'RolesController.modulesMenus')
+Route.get('/roles/modules/:id', 'RolesController.modules')
 Route.get('/roles/:id', 'RolesController.show')
 Route.put('/roles/:id', 'RolesController.update')
 Route.delete('/roles/:id', 'RolesController.destroy')
@@ -101,3 +104,26 @@ Route.post('/ordersStates', 'OrdersStatesController.store')
 Route.get('/ordersStates/:id', 'OrdersStatesController.show')
 Route.put('/ordersStates/:id', 'OrdersStatesController.update')
 Route.delete('/ordersStates/:id', 'OrdersStatesController.destroy')
+
+/**
+ *  Endpoints Modules
+ */
+
+Route.get('/modules', 'ModulesController.index')
+Route.get('/modules/menus/:id', 'ModulesController.menus')
+Route.post('/modules', 'ModulesController.store')
+Route.post('/modules/assign', 'ModulesController.assignMenu')
+Route.get('/modules/:id', 'ModulesController.show')
+Route.put('/modules/:id', 'ModulesController.update')
+Route.delete('/modules/:id', 'ModulesController.destroy')
+
+/**
+ * EndPoints de Menus
+ */
+
+Route.get('/menus', 'MenusController.index')
+Route.post('/menus', 'MenusController.store')
+Route.get('/menus/:id', 'MenusController.show')
+Route.put('/menus/:id', 'MenusController.update')
+Route.delete('/menus/:id', 'MenusController.destroy')
+
