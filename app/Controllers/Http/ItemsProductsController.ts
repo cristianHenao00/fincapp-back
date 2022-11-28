@@ -7,12 +7,7 @@ export default class ItemsProductsController {
   //Lista todos los itemsProducts
 
   public async index(ctx: HttpContextContract) {
-<<<<<<< HEAD
-    let itemsProducts: ItemsProduct[] = await
-        ItemsProduct.query()
-=======
     let itemsProducts: ItemsProduct[] = await ItemsProduct.query()
->>>>>>> main
     return itemsProducts
   }
 
@@ -36,13 +31,8 @@ export default class ItemsProductsController {
   public async update({ params, request }: HttpContextContract) {
     const body = request.body()
     const theItemsProduct = await ItemsProduct.findOrFail(params.id)
-<<<<<<< HEAD
-    theItemsProduct.idStock = body.idStock
-    theItemsProduct.idOrder = body.idOrder
-=======
     theItemsProduct.id_stock = body.id_stock
     theItemsProduct.id_order = body.id_order
->>>>>>> main
     theItemsProduct.amount = body.amount
     return theItemsProduct.save()
   }

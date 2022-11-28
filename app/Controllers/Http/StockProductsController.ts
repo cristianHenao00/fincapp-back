@@ -2,21 +2,12 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import StockProduct from 'App/Models/StockProduct'
 
 export default class StockProductsController {
-<<<<<<< HEAD
-
-  //Lista todos los stockProducts
-
-  public async index(ctx: HttpContextContract) {
-    let stockProducts: StockProduct[] = await
-    StockProduct.query().preload('product').preload('orders')
-=======
   //Lista todos los stockProducts
 
   public async index(ctx: HttpContextContract) {
     let stockProducts: StockProduct[] = await StockProduct.query()
       .preload('product')
       .preload('orders')
->>>>>>> main
     return stockProducts
   }
 
@@ -31,12 +22,7 @@ export default class StockProductsController {
   // Muestra la información de un stockProduct
 
   public async show({ params }: HttpContextContract) {
-<<<<<<< HEAD
-    let theStockProduct = await
-    StockProduct.query().where('id', params.id).preload('product')
-=======
     let theStockProduct = await StockProduct.query().where('id', params.id).preload('product')
->>>>>>> main
     return theStockProduct
   }
 

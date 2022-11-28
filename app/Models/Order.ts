@@ -17,15 +17,6 @@ export default class Order extends BaseModel {
   public id: number
 
   @column()
-<<<<<<< HEAD
-  public idUser: number
-
-  @column()
-  public idFarm: number
-
-  @column()
-  public dateOrder: string
-=======
   public id_user: number
 
   @column()
@@ -33,21 +24,11 @@ export default class Order extends BaseModel {
 
   @column()
   public date_order: string
->>>>>>> main
 
   @column()
   public state: boolean
 
   @column()
-<<<<<<< HEAD
-  public serviceCost: number
-
-  @column()
-  public shippingCost: number
-
-  @column()
-  public serviceFee: number
-=======
   public service_cost: number
 
   @column()
@@ -55,7 +36,6 @@ export default class Order extends BaseModel {
 
   @column()
   public service_fee: number
->>>>>>> main
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -64,15 +44,6 @@ export default class Order extends BaseModel {
   public updatedAt: DateTime
 
   @manyToMany(() => StockProduct, {
-<<<<<<< HEAD
-    pivotTable: 'itemsProduct',
-    pivotForeignKey: 'idOrder',
-    pivotRelatedForeignKey: 'idStock',
-  })
-  public stockProducts: ManyToMany<typeof StockProduct>
-  @belongsTo(() => User, {
-    foreignKey: 'idUser',
-=======
     pivotTable: 'items_product',
     pivotForeignKey: 'id_order',
     pivotRelatedForeignKey: 'id_stock',
@@ -81,16 +52,11 @@ export default class Order extends BaseModel {
 
   @belongsTo(() => User, {
     foreignKey: 'id_user',
->>>>>>> main
   })
   public user: BelongsTo<typeof User>
 
   @belongsTo(() => Farm, {
-<<<<<<< HEAD
-    foreignKey: 'idFarm',
-=======
     foreignKey: 'id_farm',
->>>>>>> main
   })
   public farm: BelongsTo<typeof Farm>
 }

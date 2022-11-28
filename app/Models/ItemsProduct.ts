@@ -3,11 +3,7 @@ import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
 
 export default class ItemsProduct extends BaseModel {
-<<<<<<< HEAD
-  public static table = 'itemsProduct'
-=======
   public static table = 'items_product'
->>>>>>> main
 
   @column({ isPrimary: true })
   public id: number
