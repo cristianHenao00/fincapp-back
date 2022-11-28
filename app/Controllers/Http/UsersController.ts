@@ -81,6 +81,7 @@ export default class UsersController {
       }
     }
   }
+
   /**
    * Elimina a un usuario basado en el identificador
    */
@@ -89,14 +90,11 @@ export default class UsersController {
     return theUser.delete()
   }
 
-    /**
+  /**
    * Muestra la informacion de todos los pedidos de ese usuario
    */
-     public async showOrders({ params }: HttpContextContract) {
-      let theUser = await User.query()
-        .where('id', params.id)
-        .preload('orders')
-        .preload('role')
-      return theUser
-    }
+  public async showOrders({ params }: HttpContextContract) {
+    let theUser = await User.query().where('id', params.id).preload('orders').preload('role')
+    return theUser
+  }
 }
