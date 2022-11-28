@@ -26,6 +26,7 @@ Route.get('/', async () => {
 /**
  * EndPoints de usuarios
  */
+Route.get('/usersShowOrders/:id', 'UsersController.showOrders')
 Route.get('/users', 'UsersController.index')
 Route.post('/users', 'UsersController.store')
 Route.get('/users/:id', 'UsersController.show')
@@ -69,15 +70,18 @@ Route.post('/forgot', 'SecuritysController.forgotPassword')
 Route.post('/reset', 'SecuritysController.resetPassword')
 Route.post('/logout', 'SecuritysController.logout')
 
-Route.get('/listProducts/:id', 'FarmsController.listProducts')
-Route.get('/searchFarms/:nombre', 'FarmsController.searchFarm')
-Route.get('/listFarms', 'FarmsController.listFarms')
+/**
+ * EndPoints de farms
+ */
 Route.get('/farms', 'FarmsController.index')
 Route.post('/farms', 'FarmsController.store')
 Route.get('/farms/:id', 'FarmsController.show')
 Route.put('/farms/:id', 'FarmsController.update')
 Route.delete('/farms/:id', 'FarmsController.destroy')
 
+/**
+ * EndPoints de orders
+ */
 Route.get('/orders', 'OrdersController.index')
 Route.post('/orders', 'OrdersController.store')
 Route.get('/orders/:id', 'OrdersController.show')
@@ -108,35 +112,3 @@ Route.post('/ordersStates', 'OrdersStatesController.store')
 Route.get('/ordersStates/:id', 'OrdersStatesController.show')
 Route.put('/ordersStates/:id', 'OrdersStatesController.update')
 Route.delete('/ordersStates/:id', 'OrdersStatesController.destroy')
-
-<<<<<<< HEAD
-/**
- *  Endpoints Modules
- */
-
-Route.get('/modules', 'ModulesController.index')
-Route.get('/modules/menus/:id', 'ModulesController.menus')
-Route.post('/modules', 'ModulesController.store')
-Route.post('/modules/assign', 'ModulesController.assignMenu')
-Route.get('/modules/:id', 'ModulesController.show')
-Route.put('/modules/:id', 'ModulesController.update')
-Route.delete('/modules/:id', 'ModulesController.destroy')
-
-/**
- * EndPoints de Menus
- */
-
-Route.get('/menus', 'MenusController.index')
-Route.post('/menus', 'MenusController.store')
-Route.get('/menus/:id', 'MenusController.show')
-Route.put('/menus/:id', 'MenusController.update')
-Route.delete('/menus/:id', 'MenusController.destroy')
-=======
-
-Route.get('/stockProducts', 'StockProductsController.index')
-Route.post('/stockProducts', 'StockProductsController.store')
-Route.get('/stockProducts/:id', 'StockProductsController.show')
-Route.put('/stockProducts/:id', 'StockProductsController.update')
-Route.delete('/stockProducts/:id', 'StockProductsController.destroy')
->>>>>>> 06fee4cd4520301b701e341c8d16c390e634b651
-

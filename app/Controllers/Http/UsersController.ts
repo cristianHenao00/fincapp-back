@@ -53,4 +53,15 @@ export default class UsersController {
     const theUser: User = await User.findOrFail(params.id)
     return theUser.delete()
   }
+
+    /**
+   * Muestra la informacion de todos los pedidos de ese usuario
+   */
+     public async showOrders({ params }: HttpContextContract) {
+      let theUser = await User.query()
+        .where('id', params.id)
+        .preload('orders')
+        .preload('role')
+      return theUser
+    }
 }

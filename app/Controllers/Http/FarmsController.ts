@@ -19,7 +19,7 @@ export default class FarmsController {
   }
 
    /**
-   * Lista todos las fincas con sus ordenes y productos asociados
+   * Lista todos las fincas con sus finca y productos asociados
    */
 
 
