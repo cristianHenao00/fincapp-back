@@ -33,8 +33,8 @@ export default class Rol extends BaseModel {
 
   @manyToMany(() => Module, {
     pivotTable: 'role_modules',
-    pivotForeignKey: 'id',
-    pivotRelatedForeignKey: 'id_rol',
+    pivotForeignKey: 'id_role',
+    pivotRelatedForeignKey: 'id_module',
   })
   public modules: ManyToMany<typeof Module>
 }

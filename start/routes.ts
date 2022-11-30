@@ -50,7 +50,7 @@ Route.group(() => {
   Route.delete('/roles/:id', 'RolesController.destroy')
 })
   .middleware('userAccess')
-  .middleware('permissionAccess')
+  // .middleware('permissionAccess')
 
 /**
  * EndPoints de permisssion
@@ -85,6 +85,7 @@ Route.group(() => {
  */
 Route.group(() => {
   Route.post('/login', 'SecuritysController.login')
+  Route.post('/signin', 'SecuritysController.signin')
   Route.post('/forgot', 'SecuritysController.forgotPassword')
   Route.post('/reset', 'SecuritysController.resetPassword').middleware('userAccess')
   Route.post('/logout', 'SecuritysController.logout').middleware('userAccess')

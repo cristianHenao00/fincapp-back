@@ -3,6 +3,7 @@ import Role from 'App/Models/Role'
 import RoleModule from 'App/Models/RoleModule'
 import User from 'App/Models/User'
 import { schema, rules } from '@ioc:Adonis/Core/Validator'
+import Rol from 'App/Models/Role'
 
 export default class RolesController {
   public async index(ctx: HttpContextContract) {
@@ -81,14 +82,30 @@ export default class RolesController {
   }
 
   public async modulesMenus({ params }: HttpContextContract) {
-    let modulesMenus = await Role.query()
-      .join('role_modules', 'roles.id', 'role_modules.id_role')
-      .join('modules', 'role_modules.id_module', 'modules.id')
-      .join('module_menus', 'modules.id', 'module_menus.id_module')
-      .join('menus', 'module_menus.id_menu', 'menus.id')
-      .where('roles.id', params.id)
+    let rol = await Rol.query()
+      .where('id', params.id)
+      .preload('modules', (query) => {
+        query.preload('menus')
+      })
+
+    if (!rol || rol.length == 0) {
+      return {
+        status: 'error',
+        message: 'Rol no encontrado',
+      }
+    }
+
+    const modules = rol[0].modules
+
+    if (!modules || modules.length == 0) {
+      return {
+        status: 'error',
+        message: 'Rol no tiene modulos asignados',
+      }
+    }
+
     return {
-      modulesMenus,
+      modules,
     }
   }
 
@@ -97,6 +114,7 @@ export default class RolesController {
       .join('role_modules', 'roles.id', 'role_modules.id_role')
       .join('modules', 'role_modules.id_module', 'modules.id')
       .where('roles.id', params.id)
+      .preload('modules')
     return {
       modules,
     }

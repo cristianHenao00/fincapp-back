@@ -40,8 +40,8 @@ export default class Menu extends BaseModel {
 
   @manyToMany(() => Module, {
     pivotTable: 'module_menus',
-    pivotForeignKey: 'id',
-    pivotRelatedForeignKey: 'id_menu',
+    pivotForeignKey: 'id_menu',
+    pivotRelatedForeignKey: 'id_module',
   })
   public modules: ManyToMany<typeof Module>
 }

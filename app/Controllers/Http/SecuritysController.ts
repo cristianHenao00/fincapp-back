@@ -15,25 +15,55 @@ export default class SecuritysController {
     })
     const theUser = await User.findBy('email', post.email)
     if (theUser) {
-      if (await Hash.verify(theUser.password, post.password)) {
+      const { id, email, password } = theUser
+      if (await Hash.verify(password, post.password)) {
         //Generacion de token
         const token = await auth.use('api').generate(theUser, {
           expiresIn: '60 mins',
         })
         //Obtiene los datos correspondientes a la relacion
         await theUser.load('role')
-        await theUser.load('farm')
-        await theUser.load('orders')
-        theUser.password = ''
+        // await theUser.load('farm')
+        // await theUser.load('orders')
+        // theUser.password = ''
         return {
           token: token,
-          User: theUser,
+          user: {
+            id,
+            email,
+            role_id: theUser.role.id,
+            role_name: theUser.role.name,
+          },
         }
       } else {
         return response.unauthorized('Credenciales inválidas')
       }
     } else {
       return response.unauthorized('Correo no registrado')
+    }
+  }
+
+  public async signin({ request }) {
+    const post = await request.validate({
+      schema: schema.create({
+        name: schema.string([rules.trim(), rules.required()]),
+        email: schema.string([rules.email(), rules.required()]),
+        password: schema.string([rules.required()]),
+        id_rol: schema.number([rules.required()]),
+      }),
+    })
+    if (post) {
+      const theUser = await User.findBy('email', post.email)
+      if (!theUser) {
+        const newUser: User = await User.create(post)
+        User.hashPassword(newUser)
+        return newUser
+      } else {
+        return {
+          status: 'error',
+          message: 'el correo ya está registrado',
+        }
+      }
     }
   }
 
