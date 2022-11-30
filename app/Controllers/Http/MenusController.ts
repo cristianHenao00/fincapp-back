@@ -3,7 +3,7 @@ import Menu from 'App/Models/Menu'
 
 export default class MenusController {
   public async index(ctx: HttpContextContract) {
-    let menus: Menu[] = await Menu.query().preload('modules')
+    let menus: Menu[] = await Menu.query()
     return menus
   }
 

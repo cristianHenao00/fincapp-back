@@ -28,15 +28,15 @@ export default class Module extends BaseModel {
 
   @manyToMany(() => Menu, {
     pivotTable: 'module_menus',
-    pivotForeignKey: 'id',
-    pivotRelatedForeignKey: 'id_module',
+    pivotForeignKey: 'id_module',
+    pivotRelatedForeignKey: 'id_menu',
   })
   public menus: ManyToMany<typeof Menu>
 
   @manyToMany(() => Rol, {
     pivotTable: 'role_modules',
-    pivotForeignKey: 'id',
-    pivotRelatedForeignKey: 'id_module',
+    pivotForeignKey: 'id_module',
+    pivotRelatedForeignKey: 'id_role',
   })
   public roles: ManyToMany<typeof Rol>
 }

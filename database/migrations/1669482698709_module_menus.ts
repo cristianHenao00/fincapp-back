@@ -9,6 +9,7 @@ export default class extends BaseSchema {
       table.integer('index').notNullable()
       table.integer('id_module').notNullable().unsigned().references('id').inTable('modules')
       table.integer('id_menu').notNullable().unsigned().references('id').inTable('menus')
+      table.unique(['id_module', 'id_menu'])
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })
