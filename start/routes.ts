@@ -50,7 +50,7 @@ Route.group(() => {
   Route.delete('/roles/:id', 'RolesController.destroy')
 })
   .middleware('userAccess')
-  .middleware('permissionAccess')
+  // .middleware('permissionAccess')
 
 /**
  * EndPoints de permisssion

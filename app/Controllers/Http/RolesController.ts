@@ -82,11 +82,27 @@ export default class RolesController {
   }
 
   public async modulesMenus({ params }: HttpContextContract) {
-    let modules = await Rol.query()
+    let rol = await Rol.query()
       .where('id', params.id)
       .preload('modules', (query) => {
         query.preload('menus')
       })
+
+    if (!rol || rol.length == 0) {
+      return {
+        status: 'error',
+        message: 'Rol no encontrado',
+      }
+    }
+
+    const modules = rol[0].modules
+
+    if (!modules || modules.length == 0) {
+      return {
+        status: 'error',
+        message: 'Rol no tiene modulos asignados',
+      }
+    }
 
     return {
       modules,

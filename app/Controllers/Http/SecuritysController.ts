@@ -15,14 +15,14 @@ export default class SecuritysController {
     })
     const theUser = await User.findBy('email', post.email)
     if (theUser) {
-      const { id, email, id_rol, password } = theUser
+      const { id, email, password } = theUser
       if (await Hash.verify(password, post.password)) {
         //Generacion de token
         const token = await auth.use('api').generate(theUser, {
           expiresIn: '60 mins',
         })
         //Obtiene los datos correspondientes a la relacion
-        // await theUser.load('role')
+        await theUser.load('role')
         // await theUser.load('farm')
         // await theUser.load('orders')
         // theUser.password = ''
@@ -31,7 +31,8 @@ export default class SecuritysController {
           user: {
             id,
             email,
-            role: id_rol,
+            role_id: theUser.role.id,
+            role_name: theUser.role.name,
           },
         }
       } else {
