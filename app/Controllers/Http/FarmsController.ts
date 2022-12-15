@@ -1,7 +1,10 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Farm from 'App/Models/Farm'
+import { schema, rules } from '@ioc:Adonis/Core/Validator'
 
 export default class FarmsController {
+
+
 
   // lista las fincas
 
@@ -9,6 +12,7 @@ export default class FarmsController {
     let farms: Farm[] = await Farm.query()
     return farms
   }
+
 
   // lista los productos de una finca especifica
 
@@ -18,9 +22,9 @@ export default class FarmsController {
     return theFarm
   }
 
-   /**
-   * Lista todos las fincas con sus finca y productos asociados
-   */
+  /**
+  * Lista todos las fincas con sus ordenes y productos asociados
+  */
 
 
   public async index(ctx: HttpContextContract) {
@@ -31,10 +35,33 @@ export default class FarmsController {
   /**
    * Almacena la información de una finca
    */
+
+
   public async store({ request }: HttpContextContract) {
-    const body = request.body()
-    const newFarm = await Farm.create(body)
-    return newFarm
+    const post = await request.validate({
+      schema: schema.create({
+        id_user: schema.number([rules.trim(), rules.required()]),
+        name: schema.string([rules.trim(), rules.required()]),
+        address: schema.string([rules.trim(), rules.required()]),
+        number_license: schema.string([rules.trim(), rules.required()]),
+        image: schema.string([rules.trim()]),
+      }),
+    })
+    if (post) {
+      const theFarm = await Farm.query()
+        .whereIn(['id_user', 'name', 'address', 'number_license', 'image'], 
+        [[post.id_user, post.name, post.address, post.number_license, post.image]])
+        .first()
+      if (!theFarm) {
+        const newFarm: Farm = await Farm.create(post)
+        return newFarm
+      } else {
+        return {
+          status: 'error',
+          message: 'Finca ya creada',
+        }
+      }
+    }
   }
 
   /**
@@ -62,7 +89,7 @@ export default class FarmsController {
   public async update({ params, request }: HttpContextContract) {
     const body = request.body()
     const theFarm = await Farm.findOrFail(params.id)
-    theFarm.nombre = body.name
+    theFarm.name = body.name
     theFarm.address = body.address
     theFarm.number_license = body.number_license
     theFarm.image = body.image

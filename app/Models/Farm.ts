@@ -12,7 +12,7 @@ export default class Farm extends BaseModel {
   public id_user: number
 
   @column()
-  public nombre: string
+  public name: string
 
   @column()
   public address: string
