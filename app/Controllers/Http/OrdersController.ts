@@ -1,4 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import { FileNode } from '@ioc:Adonis/Lucid/Database'
 import Order from 'App/Models/Order'
 
 export default class OrdersController {
@@ -30,6 +31,18 @@ export default class OrdersController {
   }
 
   /**
+   * Acepta un pedido pendiente
+   */
+
+    public async acceptOrder({ params }: HttpContextContract) {
+      const theOrder = await Order.findOrFail(params.id)
+      if (theOrder.state != true  ) {
+        theOrder.state = true  
+      }
+       return theOrder.save()
+    }
+ 
+  /**
    * Actualiza la información de una orden basado
    * en el identificador y nuevos parámetros
    */
@@ -55,4 +68,6 @@ export default class OrdersController {
     const theOrder = await Order.findOrFail(params.id)
     return theOrder.delete()
   }
+
+
 }

@@ -117,7 +117,6 @@ export default class RolesController {
         message: 'Rol no tiene modulos asignados',
       }
     }
-
     return {
       modules,
     }
