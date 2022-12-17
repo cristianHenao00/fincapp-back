@@ -7,7 +7,7 @@ export default class PermissionsController {
    * Lista todos los usuarios
    */
   public async index(ctx: HttpContextContract) {
-    let permissions: Permission[] = await Permission.query().preload('roles')
+    let permissions: Permission[] = await Permission.query()
     return permissions
   }
   /**
@@ -17,7 +17,7 @@ export default class PermissionsController {
     const post = await request.validate({
       schema: schema.create({
         url: schema.string([rules.trim(), rules.required()]),
-        method: schema.string([rules.trim(), rules.required]),
+        method: schema.string([rules.trim(), rules.required()]),
       }),
     })
     if (post) {
