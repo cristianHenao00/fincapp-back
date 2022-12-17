@@ -4,6 +4,7 @@ import RoleModule from 'App/Models/RoleModule'
 import User from 'App/Models/User'
 import { schema, rules } from '@ioc:Adonis/Core/Validator'
 import Rol from 'App/Models/Role'
+import Database from '@ioc:Adonis/Lucid/Database'
 
 export default class RolesController {
   public async index(ctx: HttpContextContract) {
@@ -76,9 +77,22 @@ export default class RolesController {
   }
 
   public async assignModule({ request }: HttpContextContract) {
-    const body = request.body()
-    const newRoleModule: RoleModule = await RoleModule.create(body)
-    return newRoleModule.save()
+    const { parent: id_role, child: id_module } = request.body()
+    const theRoleModule = await RoleModule.create({
+      id_role,
+      id_module,
+      index: 0,
+    })
+    return theRoleModule
+  }
+
+  public async unassignModule({ request }: HttpContextContract) {
+    const { parent: id_role, child: id_module } = request.body()
+    const theRoleModule = await RoleModule.query()
+      .where('id_role', id_role)
+      .where('id_module', id_module)
+      .delete()
+    return theRoleModule
   }
 
   public async modulesMenus({ params }: HttpContextContract) {
@@ -109,14 +123,16 @@ export default class RolesController {
     }
   }
 
-  public async modules({ params }: HttpContextContract) {
-    let modules = await Role.query()
-      .join('role_modules', 'roles.id', 'role_modules.id_role')
-      .join('modules', 'role_modules.id_module', 'modules.id')
-      .where('roles.id', params.id)
-      .preload('modules')
-    return {
-      modules,
+  public async showAssignModules({ params }: HttpContextContract) {
+    let modules = await Database.rawQuery(
+      `select m.id, m.name, CASE WHEN rm.id_module IS NULL THEN false ELSE true END checked from (select id_module from role_modules where id_role = ${params.id})  rm right join modules m on rm.id_module = m.id`
+    )
+    if (!modules || !modules.rows) {
+      return {
+        status: 'error',
+        message: 'Rol no encontrado',
+      }
     }
+    return modules.rows
   }
 }

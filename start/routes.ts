@@ -35,21 +35,22 @@ Route.group(() => {
   Route.delete('/users/:id', 'UsersController.destroy')
 })
   .middleware('userAccess')
-  .middleware('permissionAccess')
+  // .middleware('permissionAccess')
 /**
  * EndPoints de roles
  */
 Route.group(() => {
   Route.get('/roles', 'RolesController.index')
   Route.post('/roles', 'RolesController.store')
-  Route.post('/roles/assign', 'RolesController.assignModule')
+  Route.post('/roles/module/assign', 'RolesController.assignModule')
+  Route.post('/roles/module/unassign', 'RolesController.unassignModule')
   Route.get('/roles/modules/menus/:id', 'RolesController.modulesMenus')
-  Route.get('/roles/modules/:id', 'RolesController.modules')
+  Route.get('/roles/modules/:id', 'RolesController.showAssignModules')
   Route.get('/roles/:id', 'RolesController.show')
   Route.put('/roles/:id', 'RolesController.update')
   Route.delete('/roles/:id', 'RolesController.destroy')
 })
-  .middleware('userAccess')
+  // .middleware('userAccess')
   // .middleware('permissionAccess')
 
 /**
@@ -63,7 +64,7 @@ Route.group(() => {
   Route.delete('/permissions/:id', 'PermissionsController.destroy')
 })
   .middleware('userAccess')
-  .middleware('permissionAccess')
+  // .middleware('permissionAccess')
 
 /**
  * EndPoints de permisssionRoles
@@ -78,7 +79,7 @@ Route.group(() => {
   Route.post('/permissionsRoles/suspend/:id', 'PermissionsRolesController.suspend')
 })
   .middleware('userAccess')
-  .middleware('permissionAccess')
+  // .middleware('permissionAccess')
 
 /**
  * EndPoints de seguridad
@@ -102,7 +103,7 @@ Route.group(() => {
   Route.delete('/farms/:id', 'FarmsController.destroy')
 })
   .middleware('userAccess')
-  .middleware('permissionAccess')
+  // .middleware('permissionAccess')
 
 Route.group(() => {
   /**
@@ -115,7 +116,7 @@ Route.group(() => {
   Route.delete('/orders/:id', 'OrdersController.destroy')
 })
   .middleware('userAccess')
-  .middleware('permissionAccess')
+  // .middleware('permissionAccess')
 
 Route.group(() => {
   Route.get('/products', 'ProductsController.index') //cliente
@@ -125,7 +126,7 @@ Route.group(() => {
   Route.delete('/products/:id', 'ProductsController.destroy')
 })
   .middleware('userAccess')
-  .middleware('permissionAccess')
+  // .middleware('permissionAccess')
 
 Route.group(() => {
   Route.get('/categories', 'CategoriesController.index') //cliente
@@ -135,7 +136,7 @@ Route.group(() => {
   Route.delete('/categories/:id', 'CategoriesController.destroy')
 })
   .middleware('userAccess')
-  .middleware('permissionAccess')
+  // .middleware('permissionAccess')
 
 Route.group(() => {
   Route.get('/states', 'StatesController.index')
@@ -145,7 +146,7 @@ Route.group(() => {
   Route.delete('/states/:id', 'StatesController.destroy')
 })
   .middleware('userAccess')
-  .middleware('permissionAccess')
+  // .middleware('permissionAccess')
 
 Route.group(() => {
   Route.get('/ordersStates', 'OrdersStatesController.index')
@@ -155,20 +156,24 @@ Route.group(() => {
   Route.delete('/ordersStates/:id', 'OrdersStatesController.destroy')
 })
   .middleware('userAccess')
-  .middleware('permissionAccess')
+  // .middleware('permissionAccess')
 
 /**
  *  Endpoints Modules
  */
 Route.group(() => {
   Route.get('/modules', 'ModulesController.index')
-  Route.get('/modules/menus/:id', 'ModulesController.menus')
+  // Route.get('/modules/menus/:id', 'ModulesController.menus')
   Route.post('/modules', 'ModulesController.store')
-  Route.post('/modules/assign', 'ModulesController.assignMenu')
+  Route.post('/modules/menu/assign', 'ModulesController.assignMenu')
+  Route.post('/modules/menu/unassign', 'ModulesController.unassignMenu')
+  Route.get('/modules/menus/:id', 'ModulesController.showAssignMenus')
   Route.get('/modules/:id', 'ModulesController.show')
   Route.put('/modules/:id', 'ModulesController.update')
   Route.delete('/modules/:id', 'ModulesController.destroy')
-}).middleware('userAccess')
+})
+.middleware('userAccess')
+// .middleware('permissionAccess')
 
 /**
  * EndPoints de Menus
@@ -179,4 +184,6 @@ Route.group(() => {
   Route.get('/menus/:id', 'MenusController.show')
   Route.put('/menus/:id', 'MenusController.update')
   Route.delete('/menus/:id', 'MenusController.destroy')
-}).middleware('userAccess')
+})
+.middleware('userAccess')
+// .middleware('permissionAccess')
