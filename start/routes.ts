@@ -99,8 +99,9 @@ Route.group(() => {
   /**
    * EndPoints de farms
    */
-  Route.get('/farms', 'FarmsController.index') //cliente
+  Route.get('/farms', 'FarmsController.index') //admin
   Route.post('/farms', 'FarmsController.store')
+  Route.get('/farms/farmer/:id', 'FarmsController.farmer') //cliente
   Route.get('/farms/:id', 'FarmsController.show') //cliente
   Route.put('/farms/:id', 'FarmsController.update')
   Route.delete('/farms/:id', 'FarmsController.destroy')
@@ -124,11 +125,12 @@ Route.group(() => {
 Route.group(() => {
   Route.get('/products', 'ProductsController.index') //cliente
   Route.post('/products', 'ProductsController.store')
+  Route.get('/products/farmer/:id', 'ProductsController.farmer')
   Route.get('/products/:id', 'ProductsController.show') //cliente
   Route.put('/products/:id', 'ProductsController.update')
   Route.delete('/products/:id', 'ProductsController.destroy')
 })
-  .middleware('userAccess')
+  // .middleware('userAccess')
   // .middleware('permissionAccess')
 
 Route.group(() => {
