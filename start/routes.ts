@@ -34,7 +34,7 @@ Route.group(() => {
   Route.put('/users/:id', 'UsersController.update')
   Route.delete('/users/:id', 'UsersController.destroy')
 })
-  .middleware('userAccess')
+  // .middleware('userAccess')
   // .middleware('permissionAccess')
 /**
  * EndPoints de roles
@@ -66,7 +66,7 @@ Route.group(() => {
   Route.put('/permissions/:id', 'PermissionsController.update')
   Route.delete('/permissions/:id', 'PermissionsController.destroy')
 })
-  .middleware('userAccess')
+  // .middleware('userAccess')
   // .middleware('permissionAccess')
 
 /**
@@ -81,7 +81,7 @@ Route.group(() => {
   Route.post('/permissionsRoles/activate/:id', 'PermissionsRolesController.activate')
   Route.post('/permissionsRoles/suspend/:id', 'PermissionsRolesController.suspend')
 })
-  .middleware('userAccess')
+  // .middleware('userAccess')
   // .middleware('permissionAccess')
 
 /**
@@ -91,8 +91,8 @@ Route.group(() => {
   Route.post('/login', 'SecuritysController.login')
   Route.post('/signin', 'SecuritysController.signin')
   Route.post('/forgot', 'SecuritysController.forgotPassword')
-  Route.post('/reset', 'SecuritysController.resetPassword').middleware('userAccess')
-  Route.post('/logout', 'SecuritysController.logout').middleware('userAccess')
+  Route.post('/reset', 'SecuritysController.resetPassword')//.middleware('userAccess')
+  Route.post('/logout', 'SecuritysController.logout')//.middleware('userAccess')
 })
 
 Route.group(() => {
@@ -105,7 +105,7 @@ Route.group(() => {
   Route.put('/farms/:id', 'FarmsController.update')
   Route.delete('/farms/:id', 'FarmsController.destroy')
 })
-  .middleware('userAccess')
+  // .middleware('userAccess')
   // .middleware('permissionAccess')
 
 Route.group(() => {
@@ -118,7 +118,7 @@ Route.group(() => {
   Route.put('/orders/:id', 'OrdersController.update')
   Route.delete('/orders/:id', 'OrdersController.destroy')
 })
-  .middleware('userAccess')
+  // .middleware('userAccess')
   // .middleware('permissionAccess')
 
 Route.group(() => {
@@ -128,7 +128,7 @@ Route.group(() => {
   Route.put('/products/:id', 'ProductsController.update')
   Route.delete('/products/:id', 'ProductsController.destroy')
 })
-  .middleware('userAccess')
+  // .middleware('userAccess')
   // .middleware('permissionAccess')
 
 Route.group(() => {
@@ -138,7 +138,7 @@ Route.group(() => {
   Route.put('/categories/:id', 'CategoriesController.update')
   Route.delete('/categories/:id', 'CategoriesController.destroy')
 })
-  .middleware('userAccess')
+  // .middleware('userAccess')
   // .middleware('permissionAccess')
 
 Route.group(() => {
@@ -148,7 +148,7 @@ Route.group(() => {
   Route.put('/states/:id', 'StatesController.update')
   Route.delete('/states/:id', 'StatesController.destroy')
 })
-  .middleware('userAccess')
+  // .middleware('userAccess')
   // .middleware('permissionAccess')
 
 Route.group(() => {
@@ -158,7 +158,7 @@ Route.group(() => {
   Route.put('/ordersStates/:id', 'OrdersStatesController.update')
   Route.delete('/ordersStates/:id', 'OrdersStatesController.destroy')
 })
-  .middleware('userAccess')
+  // .middleware('userAccess')
   // .middleware('permissionAccess')
 
 /**
@@ -175,7 +175,7 @@ Route.group(() => {
   Route.put('/modules/:id', 'ModulesController.update')
   Route.delete('/modules/:id', 'ModulesController.destroy')
 })
-.middleware('userAccess')
+// .middleware('userAccess')
 // .middleware('permissionAccess')
 
 /**
@@ -188,5 +188,5 @@ Route.group(() => {
   Route.put('/menus/:id', 'MenusController.update')
   Route.delete('/menus/:id', 'MenusController.destroy')
 })
-.middleware('userAccess')
+// .middleware('userAccess')
 // .middleware('permissionAccess')
