@@ -1,4 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Database from '@ioc:Adonis/Lucid/Database'
 import Product from 'App/Models/Product'
 
 export default class ProductsController {
@@ -26,6 +27,23 @@ export default class ProductsController {
       .preload('category')
       .preload('stockProducts')
     return theProduct
+  }
+
+  public async farmer({ params }: HttpContextContract) {
+    let theProducts = await Database.rawQuery(
+      `select pf.*, c.name  as category_name from
+      (select p.*, f.name as farm_name from products p join farms f
+        on p.id_farm = f.id
+        where f.id_user = ${params.id}) pf join categories c
+        on pf.id_category = c.id`
+    )
+    if (!theProducts || !theProducts.rows) {
+      return {
+        status: 'error',
+        message: 'Rol no encontrado',
+      }
+    }
+    return theProducts.rows
   }
 
   //Actualiza la información de un producto basado

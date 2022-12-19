@@ -1,18 +1,15 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Farm from 'App/Models/Farm'
 import { schema, rules } from '@ioc:Adonis/Core/Validator'
+import Application from '@ioc:Adonis/Core/Application'
 
 export default class FarmsController {
-
-
-
   // lista las fincas
 
   public async listFarms(ctx: HttpContextContract) {
     let farms: Farm[] = await Farm.query()
     return farms
   }
-
 
   // lista los productos de una finca especifica
 
@@ -23,12 +20,16 @@ export default class FarmsController {
   }
 
   /**
-  * Lista todos las fincas con sus ordenes y productos asociados
-  */
-
+   * Lista todos las fincas con sus ordenes y productos asociados
+   */
 
   public async index(ctx: HttpContextContract) {
-    let farms: Farm[] = await Farm.query().preload('orders').preload('products')
+    let farms: Farm[] = await Farm.query()
+    return farms
+  }
+
+  public async farmer({ params }: HttpContextContract) {
+    let farms: Farm[] = await Farm.query().where('id_user', params.id)
     return farms
   }
 
@@ -36,32 +37,25 @@ export default class FarmsController {
    * Almacena la información de una finca
    */
 
-
   public async store({ request }: HttpContextContract) {
-    const post = await request.validate({
-      schema: schema.create({
-        id_user: schema.number([rules.trim(), rules.required()]),
-        name: schema.string([rules.trim(), rules.required()]),
-        address: schema.string([rules.trim(), rules.required()]),
-        number_license: schema.string([rules.trim(), rules.required()]),
-        image: schema.string([rules.trim()]),
-      }),
+    const image = request.file('image')
+    const body = request.body()
+    const newFarm = await Farm.create({
+      ...body,
+      image: '',
     })
-    if (post) {
-      const theFarm = await Farm.query()
-        .whereIn(['id_user', 'name', 'address', 'number_license', 'image'], 
-        [[post.id_user, post.name, post.address, post.number_license, post.image]])
-        .first()
-      if (!theFarm) {
-        const newFarm: Farm = await Farm.create(post)
-        return newFarm
-      } else {
-        return {
-          status: 'error',
-          message: 'Finca ya creada',
-        }
+    if (newFarm) {
+      if (image) {
+        await image.move(Application.resourcesPath('farms'), {
+          name: `${newFarm.id}_${newFarm.id_user}.${image.extname}`,
+          overwrite: true,
+        })
+        newFarm.image = image.fileName ? image.fileName : ''
+        await newFarm.save()
       }
     }
+
+    return newFarm
   }
 
   /**
