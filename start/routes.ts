@@ -192,3 +192,17 @@ Route.group(() => {
 })
 // .middleware('userAccess')
 // .middleware('permissionAccess')
+
+/**
+ * EndPoints de Stock
+ */
+Route.group(() => {
+  Route.get('/stocks', 'StockProductsController.index')
+  Route.post('/stocks', 'StockProductsController.store')
+  Route.get('/stocks/farmer/:id', 'StockProductsController.farmer')
+  Route.get('/stocks/:id', 'StockProductsController.show')
+  Route.put('/stocks/:id', 'StockProductsController.update')
+  Route.delete('/stocks/:id', 'StockProductsController.destroy')
+})
+// .middleware('userAccess')
+// .middleware('permissionAccess')
