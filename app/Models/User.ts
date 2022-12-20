@@ -9,12 +9,15 @@ import {
   hasMany,
   HasOne,
   hasOne,
+  ManyToMany,
+  manyToMany,
 } from '@ioc:Adonis/Lucid/Orm'
 import Rol from './Role'
 import ApiToken from './ApiToken'
 import Hash from '@ioc:Adonis/Core/Hash'
 import Order from './Order'
 import Farm from './Farm'
+import Rating from './Rating'
 
 export default class User extends BaseModel {
   public static table = 'users'
@@ -59,6 +62,13 @@ export default class User extends BaseModel {
     foreignKey: 'id_user',
   })
   public orders: HasMany<typeof Order>
+
+  @manyToMany(() => Rating, {
+    pivotTable: 'user_ratings',
+    pivotForeignKey: 'id_user',
+    pivotRelatedForeignKey: 'id_rating',
+  })
+  public ratings: ManyToMany<typeof Rating>
 
   @beforeSave()
   public static async hashPassword(theUser: User) {
