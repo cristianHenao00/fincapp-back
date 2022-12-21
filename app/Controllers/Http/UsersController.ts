@@ -95,6 +95,8 @@ export default class UsersController {
    */
   public async showOrders({ params }: HttpContextContract) {
     let theUser = await User.query().where('id', params.id).preload('orders').preload('role')
+
+    
     return theUser
   }
 }
