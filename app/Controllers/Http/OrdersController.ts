@@ -2,26 +2,8 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { FileNode } from '@ioc:Adonis/Lucid/Database'
 import ItemsProduct from 'App/Models/ItemsProduct'
 import Order from 'App/Models/Order'
-import User from 'App/Models/User'
 
 export default class OrdersController {
-
-   //buscar Orden false
-   public async searchOrder2({ params }: HttpContextContract) {
-    let theOrder = await User.query().where('id', params.id).preload('orders')
-    if(theOrder){
-
-    }
-    return theOrder
-  }
-
-  public async searchOrder({ params }: HttpContextContract) {
-    const theOrder = await Order.findOrFail(params.id)
-    theOrder.state = false
-    return theOrder.save()
-  }
-
-
 
   //Lista todos las ordenes
 

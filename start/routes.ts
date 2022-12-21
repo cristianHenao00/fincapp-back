@@ -118,8 +118,7 @@ Route.group(() => {
   Route.get('/orders/:id', 'OrdersController.show')
   Route.put('/orders/:id', 'OrdersController.update')
   Route.delete('/orders/:id', 'OrdersController.destroy')
-  Route.get('/orders/searchOrder/:id', 'OrdersController.searchOrder')
-  Route.get('/orders/searchOrder2/:id', 'OrdersController.searchOrder2')
+  
 
   Route.put('/orders/consolidateOrder/:id', 'OrdersController.consolidateOrder')
 
@@ -231,7 +230,6 @@ Route.group(() => {
     Route.put('/itemsProducts/:id', 'ItemsProductsController.update')
     Route.delete('/itemsProducts/:id', 'ItemsProductsController.destroy')
 
-    Route.post('/itemsProducts/CreateOrder', 'ItemsProductsController.CreateOrder')
    
 
   })
