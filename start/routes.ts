@@ -100,8 +100,10 @@ Route.group(() => {
    * EndPoints de farms
    */
   Route.get('/farms', 'FarmsController.index') //admin
+  Route.get('/farms/users', 'FarmsController.users') //users
   Route.post('/farms', 'FarmsController.store')
   Route.get('/farms/farmer/:id', 'FarmsController.farmer') //cliente
+  Route.get('/farms/products/:id', 'FarmsController.products') //cliente
   Route.get('/farms/:id', 'FarmsController.show') //cliente
   Route.put('/farms/:id', 'FarmsController.update')
   Route.delete('/farms/:id', 'FarmsController.destroy')
@@ -220,16 +222,20 @@ Route.group(() => {
 // .middleware('userAccess')
 // .middleware('permissionAccess')
 
+// end point intemProduct
 
-  // end point intemProduct
+Route.group(() => {
+  Route.get('/itemsProducts', 'ItemsProductsController.index')
+  Route.post('/itemsProducts', 'ItemsProductsController.store')
+  Route.get('/itemsProducts/:id', 'ItemsProductsController.show')
+  Route.put('/itemsProducts/:id', 'ItemsProductsController.update')
+  Route.delete('/itemsProducts/:id', 'ItemsProductsController.destroy')
 
-  Route.group(() => {
-    Route.get('/itemsProducts', 'ItemsProductsController.index')
-    Route.post('/itemsProducts', 'ItemsProductsController.store')
-    Route.get('/itemsProducts/:id', 'ItemsProductsController.show')
-    Route.put('/itemsProducts/:id', 'ItemsProductsController.update')
-    Route.delete('/itemsProducts/:id', 'ItemsProductsController.destroy')
+/**
+ * EndPoints de Stock
+ */
+Route.group(() => {
+  Route.get('/public/farms/:image', 'PublicController.farms')
+  Route.get('/public/products/:image', 'PublicController.products')
+})
 
-   
-
-  })
