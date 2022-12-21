@@ -1,8 +1,11 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import ItemsProduct from 'App/Models/ItemsProduct'
 
+
+
 export default class ItemsProductsController {
-  //Lista todos los itemsProducts
+
+ 
 
   //Lista todos los itemsProducts
 
