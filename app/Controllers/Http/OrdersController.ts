@@ -1,5 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { FileNode } from '@ioc:Adonis/Lucid/Database'
+import Database, { FileNode } from '@ioc:Adonis/Lucid/Database'
 import ItemsProduct from 'App/Models/ItemsProduct'
 import Order from 'App/Models/Order'
 
@@ -60,6 +60,11 @@ export default class OrdersController {
     return orderProductCreate
   }
 
+
+
+
+
+
   /**
    * Muestra la información de una sola orden
    */
@@ -112,10 +117,23 @@ export default class OrdersController {
    * consolidar orden
    */
    public async consolidateOrder({ params }: HttpContextContract) {
+    let sc = await Database.rawQuery(
+      `select sum(sp.amount * sp.value) from orders o inner join items_product ip on o.id = ip.id_order 
+      inner join stock_product sp on sp.id = ip.id_stock 
+      where o.id = ${params.id}`
+    )
+
+
     const theOrder = await Order.findOrFail(params.id)
-    theOrder.state = true
+    theOrder.state = false
+    theOrder.service_fee = 4000
+    theOrder.shipping_cost = 3000
+    theOrder.service_cost =Number(sc.rows[0]["sum"])
+
     return theOrder.save()
   }
+
+ 
 
 
 }
