@@ -1,8 +1,28 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { FileNode } from '@ioc:Adonis/Lucid/Database'
+import ItemsProduct from 'App/Models/ItemsProduct'
 import Order from 'App/Models/Order'
+import User from 'App/Models/User'
 
 export default class OrdersController {
+
+   //buscar Orden false
+   public async searchOrder2({ params }: HttpContextContract) {
+    let theOrder = await User.query().where('id', params.id).preload('orders')
+    if(theOrder){
+
+    }
+    return theOrder
+  }
+
+  public async searchOrder({ params }: HttpContextContract) {
+    const theOrder = await Order.findOrFail(params.id)
+    theOrder.state = false
+    return theOrder.save()
+  }
+
+
+
   //Lista todos las ordenes
 
   public async index(ctx: HttpContextContract) {
@@ -19,6 +39,43 @@ export default class OrdersController {
     const body = request.body()
     const newOrder = await Order.create(body)
     return newOrder
+  }
+  // Almacena la información de una orden
+
+  public async createOrder(order:any) {
+    const newOrder = await Order.create(order)
+    return newOrder.$attributes
+  }
+
+  public async saveProductOrder({ request }: HttpContextContract){
+    const {id_user,id_farm,id_stock,amount} = request.body()
+    const order = await Order.query().where("id_farm",id_farm).where("id_user",id_user).where("state",true)
+
+    console.log(order)
+    
+    if(order.length===0){
+      const new_order = {
+        id_user,
+        id_farm,
+        date_order: new Date(),
+        state:true,
+        service_cost:0,
+        shipping_cost:0,
+        service_fee:0
+    }
+    
+      const orderCreate = await this.createOrder(new_order)
+      console.log(orderCreate)
+
+      const orderProduct={id_stock,amount,id_order:orderCreate.id}
+      const orderProductCreate =  await ItemsProduct.create(orderProduct)
+
+      return orderProductCreate
+    }
+    const orderProduct={id_stock,amount,id_order:order[0].id}
+    const orderProductCreate =  await ItemsProduct.create(orderProduct)
+
+    return orderProductCreate
   }
 
   /**
@@ -67,6 +124,15 @@ export default class OrdersController {
   public async destroy({ params }: HttpContextContract) {
     const theOrder = await Order.findOrFail(params.id)
     return theOrder.delete()
+  }
+
+   /**
+   * consolidar orden
+   */
+   public async consolidateOrder({ params }: HttpContextContract) {
+    const theOrder = await Order.findOrFail(params.id)
+    theOrder.state = true
+    return theOrder.save()
   }
 
 

@@ -1,8 +1,19 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import ItemsProduct from 'App/Models/ItemsProduct'
+import Order from 'App/Models/Order'
+import State from 'App/Models/State'
+import User from 'App/Models/User'
+import OrdersController from './OrdersController'
+
 
 export default class ItemsProductsController {
-  //Lista todos los itemsProducts
+
+  //buscar Orden
+  public async CreateOrder({ request }: HttpContextContract) {
+    const body = request.body()
+    const newOrder = await Order.create(body)
+    return newOrder
+  }
 
   //Lista todos los itemsProducts
 
