@@ -40,13 +40,7 @@ export default class PermissionsRolesController {
    * Muestra la información de un solo usuario
    */
   public async show({ params }: HttpContextContract) {
-    const thePermissionRole = PermissionRol.find(params.id)
-    if (!thePermissionRole) {
-      return {
-        status: 'error',
-        message: 'PermisoRol no encontrado',
-      }
-    }
+    const thePermissionRole = PermissionRol.findOrFail(params.id)
     return thePermissionRole
   }
   /**
@@ -68,11 +62,6 @@ export default class PermissionsRolesController {
         thePermissionRole.id_permission = post.id_permission
         thePermissionRole.activated = post.activated
         return thePermissionRole.save()
-      }
-    } else {
-      return {
-        status: 'error',
-        message: 'PermisoRol no encontrado',
       }
     }
   }

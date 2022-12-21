@@ -16,7 +16,7 @@ export default class RolesController {
   public async store({ request }: HttpContextContract) {
     const post = await request.validate({
       schema: schema.create({
-        name: schema.string({ trim: true }),
+        name: schema.string([rules.trim(), rules.required()]),
       }),
     })
     if (post) {

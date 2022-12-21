@@ -110,15 +110,23 @@ export default class SecuritysController {
       const post = await request.validate({
         schema: schema.create({
           password: schema.string([rules.required()]),
+          password_new: schema.string([rules.required()]),
         }),
       })
-      theUser.password = post.password
-      User.hashPassword(theUser)
-      await theUser.save()
-      await auth.use('api').revoke()
-      return {
-        status: 'success',
-        message: 'La contraseña se ha restaurado correctamente',
+      if (post.password_new === post.password) {
+        theUser.password = post.password_new
+        User.hashPassword(theUser)
+        await theUser.save()
+        await auth.use('api').revoke()
+        return {
+          status: 'success',
+          message: 'La contraseña se ha restaurado correctamente',
+        }
+      }else {
+        return {
+          status: 'error',
+          message: 'La constraseña no coincide'
+        }
       }
     }
   }

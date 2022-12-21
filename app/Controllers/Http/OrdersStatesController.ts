@@ -20,8 +20,8 @@ export default class OrdersStatesController {
   public async update({ params, request }: HttpContextContract) {
     const body = request.body()
     const theOrderState = await OrderState.findOrFail(params.id)
-    theOrderState.id_order = body.idOrder
-    theOrderState.id_state = body.idState
+    theOrderState.id_order = body.id_order
+    theOrderState.id_state = body.id_state
     return theOrderState.save()
   }
 

@@ -53,8 +53,8 @@ export default class ProductsController {
     const body = request.body()
     const theProduct = await Product.findOrFail(params.id)
     theProduct.name = body.name
-    theProduct.farm = body.farm
-    theProduct.category = body.category
+    theProduct.id_farm = body.id_farm
+    theProduct.id_category = body.id_category
     return theProduct.save()
   }
 

@@ -39,13 +39,7 @@ export default class PermissionsController {
    * Muestra la información de un solo usuario
    */
   public async show({ params }: HttpContextContract) {
-    const thePermission = Permission.find(params.id)
-    if (!thePermission) {
-      return {
-        status: 'error',
-        message: 'Permiso no encontrado',
-      }
-    }
+    const thePermission = Permission.findOrFail(params.id)
     return thePermission
   }
   /**

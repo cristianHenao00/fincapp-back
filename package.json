@@ -7,7 +7,27 @@
     "build": "node ace build --production",
     "start": "node server.js",
     "lint": "eslint . --ext=.ts",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "test": "nyc node ace test",
+    "test:coverage": "nyc npm run test"
+  },
+  "nyc": {
+    "extends": "@istanbuljs/nyc-config-typescript",
+    "check-coverage": true,
+    "all": true,
+    "include": [
+      "app/**/!(*.test.*).[tj]s?(x)"
+    ],
+    "exclude": [
+      "tests/**/!(*.test.*).[tj]s?(x)"
+    ],
+    "reporter": [
+      "html",
+      "lcov",
+      "text",
+      "text-summary"
+    ],
+    "report-dir": "coverage"
   },
   "eslintConfig": {
     "extends": [
@@ -56,9 +76,11 @@
     "@adonisjs/core": "^5.8.0",
     "@adonisjs/lucid": "^18.3.0",
     "@adonisjs/repl": "^3.1.0",
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@sendgrid/mail": "^7.7.0",
     "luxon": "^3.1.0",
     "mysql2": "^2.3.3",
+    "nyc": "^15.1.0",
     "pg": "^8.8.0",
     "phc-argon2": "^1.1.4",
     "proxy-addr": "^2.0.7",

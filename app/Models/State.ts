@@ -18,7 +18,7 @@ export default class State extends BaseModel {
   @manyToMany(() => Order, {
     pivotTable: 'order_states',
     pivotForeignKey: 'id_state',
-    pivotRelatedForeignKey: 'id_orders',
+    pivotRelatedForeignKey: 'id_order',
   })
   public orders: ManyToMany<typeof Order>
 }
